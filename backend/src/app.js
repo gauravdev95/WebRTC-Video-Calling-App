@@ -17,9 +17,12 @@ const io = connectToSocket(server);
 // Set the port
 app.set("port", process.env.PORT || 8000);
 
-// Configure CORS
+// Configure CORS — restricted to the frontend origin. Set FRONTEND_URL in
+// .env to the deployed frontend URL (e.g. https://<app>.vercel.app);
+// the default is the local CRA dev server.
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 app.use(cors({
-    origin: "*", // Allow all origins, you can specify your frontend URL here
+    origin: FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
     allowedHeaders: ["Content-Type", "Authorization"] // Allowed headers
 }));
